@@ -12,15 +12,18 @@ body {
     margin: 0;
     color: white;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 {
     font-size: 3rem;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .input-box {
-    margin: 30px auto;
+    margin: 25px;
 }
 
 input {
@@ -34,17 +37,76 @@ input {
 
 button {
     font-size: 1.2rem;
-    padding: 12px 18px;
+    padding: 12px 20px;
     border-radius: 12px;
     border: none;
     background: #ffcc00;
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-button:hover {
-    transform: scale(1.05);
 }
 
 #flashcards {
+    width: 90%;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    color: #333;
+    height: 160px;
+    border-radius: 18px;
+    font-size: 1.3rem;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,.3);
+}
+</style>
+</head>
+
+<body>
+
+<h1>📚 Flashcard Generator</h1>
+
+<div class="input-box">
+    <input id="term" placeholder="Term">
+    <input id="definition" placeholder="Definition">
+    <br>
+    <button onclick="addCard()">Add Flashcard</button>
+</div>
+
+<div id="flashcards"></div>
+
+<script>
+const flashcards = document.getElementById("flashcards");
+
+function addCard() {
+    const term = document.getElementById("term").value.trim();
+    const definition = document.getElementById("definition").value.trim();
+
+    if (!term || !definition) return;
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = term;
+
+    let flipped = false;
+
+    card.onclick = () => {
+        flipped = !flipped;
+        card.textContent = flipped ? definition : term;
+    };
+
+    flashcards.appendChild(card);
+
+    document.getElementById("term").value = "";
+    document.getElementById("definition").value = "";
+}
+</script>
+
+</body>
+</html>
